@@ -5,7 +5,8 @@ import {
 } from 'react-router-dom';
 
 // importing components
-import TestPage from '../components/TestPage';
+import HomePage from '../components/pages/homePage/HomePage'; 
+import ShopPage from '../components/pages/shopPage/ShopPage';
 
 const appRouter = () => {
         const routes = (
@@ -13,8 +14,15 @@ const appRouter = () => {
             <Route
               path="/"
               exact
-              render={props => (
-                    <TestPage {...props} />
+              render={() => (
+                    <HomePage />
+            )} 
+            />
+            <Route
+              path="/shop"
+              exact
+              render={() => (
+                    <ShopPage />
             )} 
             />
             </Switch>

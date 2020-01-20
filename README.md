@@ -1,6 +1,6 @@
-# Webpack4 Boilerplate
+# REACT ECOMMERCE SHOP
 
 ## FEATURES!
- - Webpack4 boilerplate to be used with REACT.JS
+ - Ecommerce Shop built using react.js
 
 
