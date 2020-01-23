@@ -1,0 +1,20 @@
+.header{
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 16px;
+    width: 100%;
+
+    &__nav{
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+
+        &--item{
+            color: black;
+            cursor: pointer;
+            padding-right: 50px;
+            text-decoration: none;
+        }
+    }
+}

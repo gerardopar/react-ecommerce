@@ -14,7 +14,10 @@ const collectionItem = ({
         }}
       />
       <div className="collectionItem__footer">
-        <span className="collectionItem__footer--name">{name}</span>
+        <span className="collectionItem__footer--name">
+        {name}
+        {id}
+        </span>
         <span className="collectionItem__footer--price">{price}</span>
       </div>
     </div>
