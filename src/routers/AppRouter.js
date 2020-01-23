@@ -9,7 +9,7 @@ import Header from '../components/UI/header/Header';
 import HomePage from '../components/pages/homePage/HomePage'; 
 import ShopPage from '../components/pages/shopPage/ShopPage';
 import SignInAndSignUpPage from '../components/pages/signInAndSignUpPage/SignInAndSignUpPage';
-import { auth } from '../firebase/firebase.utils';
+import { auth, createUserProfileDocument } from '../firebase/firebase.utils';
 
 class AppRouter extends Component {
     unsubscribeFromAuth = null;
@@ -22,10 +22,21 @@ class AppRouter extends Component {
     }
     
     componentDidMount() {
-        this.unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
-            this.setState({ currentUser: user });
+        this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+            if (userAuth) {
+                const userRef = await createUserProfileDocument(userAuth);
 
-            console.log(user);
+                userRef.onSnapshot((snapShot) => {
+                    this.setState({
+                        currentUser: {
+                            id: snapShot.id,
+                            ...snapShot.data()
+                        }
+                    });
+                });
+            }
+
+            this.setState({ currentUser: userAuth });
         });
     }
 

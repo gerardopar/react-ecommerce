@@ -1,6 +1,6 @@
 // importing modules
 import firebase from 'firebase/app';
-import 'firebase/firebase-firestore'; // firestore
+import 'firebase/firestore'; // firestore
 import 'firebase/auth'; // authentication
 
 // firebase config
@@ -21,6 +21,32 @@ firebase.initializeApp(firebaseConfig);
 // exporting firebase services
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
+
+// firestore query
+export const createUserProfileDocument = async (userAuth, additionalData) => {
+    if (!userAuth) return;
+
+    const userRef = firestore.doc(`users/${userAuth.uid}`); // queries the collection
+    const snapShot = await userRef.get(); // gets the user data
+
+    if (!snapShot.exists) {
+        const { displayName, email } = userAuth;
+        const createdAt = new Date();
+
+        try {
+            await userRef.set({
+                displayName,
+                email,
+                createdAt,
+                ...additionalData
+            });
+        } catch (error) {
+            console.log('error creating user', error.message);
+        }
+    }
+
+    return userRef;
+};
 
 const provider = new firebase.auth.GoogleAuthProvider();
 provider.setCustomParameters({ prompt: 'select_account' });

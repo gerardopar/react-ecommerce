@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import FormInput from '../../forms/formInput';
 import CustomButton from '../../forms/customButton';
 // importing firebase services
-import { signInWithGoogle } from '../../../firebase/firebase.utils';
+import { auth, signInWithGoogle } from '../../../firebase/firebase.utils';
 
 class SignIn extends Component {
     constructor(props) {
@@ -16,11 +16,18 @@ class SignIn extends Component {
         };
     }
 
-    handleSubmit = (e) => {
-        e.preventDefault();
-        const email = e.target.elements.email.value;
-        const password = e.target.elements.password.value;
-    }
+    handleSubmit = async (event) => {
+        event.preventDefault();
+    
+        const { email, password } = this.state;
+    
+        try {
+          await auth.signInWithEmailAndPassword(email, password);
+          this.setState({ email: '', password: '' });
+        } catch (error) {
+          console.log(error);
+        }
+      };
 
     handleOnChange = (e) => {
         const { value, name } = e.target; // destructors the name and value from the input onChange
@@ -39,7 +46,7 @@ class SignIn extends Component {
                       value={this.state.email} 
                       handleOnChange={this.handleOnChange}
                       label="email"
-                      autoComplete="off"
+                      autoomplete="off"
                       required
                     />
                     <FormInput 
